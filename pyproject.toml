@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "chatgpt-api-demo"
+version = "0.0.1"
+description = ""
+authors = ["Dongdong Zhang <zhangdd@whut.edu.cn>"]
+readme = "README.md"
+packages = [{include = "chatgpt_api_demo"}]
+include = ["chatgpt_api_demo/*"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openai = "^0.27.0"
+python-dotenv = "^1.0.0"
+rich = "^13.3.1"
+
+[tool.poetry.scripts]
+chatgpt = 'chatgpt_api_demo.cli:main'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
