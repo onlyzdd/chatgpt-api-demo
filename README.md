@@ -2,11 +2,13 @@
 
 This repository is a demo for OpenAI's ChatGPT API usage in Python.
 
+![Demo](./demo.gif)
+
 ## Installation
 
 You must have Python >= 3.8 installed to run this app.
 
-Goto the [Release](./releases) page, download the latest `.whl` package, and run `pip install ./chatgpt_api_demo-0.0.1-py3-none-any.whl` to install.
+Goto the [Release](./releases) page, download the latest `.whl` package, and run `pip install ./chatgpt_api_demo-0.0.2-py3-none-any.whl` to install.
 
 ## Setup
 

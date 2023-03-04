@@ -6,7 +6,8 @@ from typing import List, Optional
 import openai
 from dotenv import load_dotenv
 from rich.console import Console
-from rich.markdown import Markdown
+from rich.live import Live
+from rich.markdown import Markdown, MarkdownIt
 
 OPENAI_MODEL = 'gpt-3.5-turbo'
 OPTIONS = {
@@ -45,17 +46,21 @@ def complete(history: Optional[List] = None, stream: bool = True):
         messages=[{'role': 'user', 'content': question} for question in history],
         stream=stream,
     )
+    parser = MarkdownIt().enable("strikethrough")
     if stream:
         console.print('[bold green]Answer:[/] ')
         start_line = False
-        for block in completion:
-            content = block['choices'][0]['delta'].get('content', '')
-            if not start_line:
-                if len(content.strip()):
-                    start_line = True
-                    print(content.lstrip(), end='', flush=True)
-            else:
-                print(content, end='', flush=True)
+        markdown = Markdown(markup='')
+        with Live(markdown, refresh_per_second=4):
+            for block in completion:
+                content = block['choices'][0]['delta'].get('content', '')
+                if not start_line:
+                    if len(content.strip()):
+                        start_line = True
+                        markdown.markup += content.lstrip()
+                else:
+                    markdown.markup += content
+                markdown.parsed = parser.parse(markdown.markup)
     else:
         console.print('[bold green]Answer:[/] ')
         markdown = Markdown(completion['choices'][0]['message']['content'].strip())
